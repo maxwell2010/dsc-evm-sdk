@@ -21,6 +21,9 @@ npm install
 # Возврат в предыдущую папку
 cd ..
 
+# Скачивание JavaScript SDK
+curl -O https://raw.githubusercontent.com/maxwell2010/dsc-evm-sdk/main/js_sdk_query.js
+
 # Скачивание Python SDK
 curl -O https://raw.githubusercontent.com/maxwell2010/dsc-evm-sdk/main/dsc-python.py
 
