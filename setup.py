@@ -13,9 +13,6 @@ def install_node():
         print("Неизвестная операционная система. Установите Node.js вручную.")
 
 def clone_repositories():
-    # Клонирование репозитория с JavaScript SDK
-    subprocess.check_call(['git', 'clone', 'https://github.com/maxwell2010/dsc-evm-sdk.git'])
-
     # Клонирование репозитория
     subprocess.check_call(['git', 'clone', '--branch', 'master', 'https://bitbucket.org/decimalteam/dsc-js-sdk.git'])
     os.chdir('dsc-js-sdk')
