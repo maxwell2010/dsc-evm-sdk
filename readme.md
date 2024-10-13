@@ -16,29 +16,20 @@
 8. скачать [https://github.com/maxwell2010/dsc-evm-sdk/blob/main/dsc-python.py](https://github.com/maxwell2010/dsc-evm-sdk/blob/main/dsc-python.py)
 9. установить pip3 install py_mini_racer
 
-```js
-const { Wallet, DecimalEVM, DecimalNetworks } = SDK;
-const decimalWallet = new Wallet(mnemonic);
 
-//DecimalNetworks.devnet - is devnet
-//DecimalNetworks.testnet - is testnet
-//DecimalNetworks.mainnet - is mainnet
-const decimalEVM = new DecimalEVM(decimalWallet, DecimalNetworks.mainnet);
+## Использование:
 
-//To work with Decimal contracts, they need to be initialized
-//You can initialize all contracts at once, or individually
-//If you forgot to initialize the contact before using the function, it will be initialized automatically during the execution of the function
-//To speed up the sdk, we recommend doing this in advance
-await decimalEVM.connect(); // initializes all contacts
-//or
-await decimalEVM.connect('contract-center') // initializes only contract-center contact
-await decimalEVM.connect('token-center') // initializes only token-center contact
-await decimalEVM.connect('nft-center') // initializes only nft-center contact
-await decimalEVM.connect('delegation') // initializes only delegation contact (delegation token)
-await decimalEVM.connect('delegation-nft') // initializes only delegation-nft contact (delegation nft)
-await decimalEVM.connect('master-validator') // initializes only master-validator contact (master node)
-await decimalEVM.connect('multi-call') // initializes only multi-call contact (multi send)
-await decimalEVM.connect('multi-sig') // initializes only multi-sig contact
+```python
+async def main():
+    # Загрузка JavaScript кода из файла
+    with open('./js_sdk_query.js', 'r') as js_file:
+        js_code = js_file.read()
+
+    sdk = DecimalSDK(js_code)
+    response = await sdk.send_del('0xRecipientAddress', 10, 'ваша мнемоническая фраза')
+    print(response)
+
+if __name__ == "__main__":
+    asyncio.run(main())
 ```
 
-## DEL
