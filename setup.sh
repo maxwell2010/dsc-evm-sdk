@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Клонирование репозитория с JavaScript SDK
+git clone https://github.com/maxwell2010/dsc-evm-sdk.git
+
 # Клонирование репозитория
 git clone --branch master https://bitbucket.org/decimalteam/dsc-js-sdk.git
 cd dsc-js-sdk
@@ -20,12 +23,6 @@ npm install
 
 # Возврат в предыдущую папку
 cd ..
-
-# Скачивание JavaScript SDK
-curl -O https://raw.githubusercontent.com/maxwell2010/dsc-evm-sdk/main/js_sdk_query.js
-
-# Скачивание Python SDK
-curl -O https://raw.githubusercontent.com/maxwell2010/dsc-evm-sdk/main/dsc-python.py
 
 # Установка зависимостей Python
 pip3 install py_mini_racer
