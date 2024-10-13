@@ -3,13 +3,16 @@ from py_mini_racer import py_mini_racer
 import asyncio
 
 class DecimalSDK:
-    def __init__(self, js_code):
+    def __init__(self):
         """
         Инициализация SDK с JavaScript кодом.
 
         :param js_code: Строка с JavaScript кодом.
         """
+        # Загрузка JavaScript кода из файла
         self.ctx = py_mini_racer.MiniRacer()
+        with open('./dsc-js-sdk/js_sdk_query.js', 'r') as js_file:
+            js_code = js_file.read()
         self.ctx.eval(js_code)
 
     async def send_del(self, to: str, amount: float, mnemonic: str) -> dict:
@@ -78,11 +81,7 @@ class DecimalSDK:
 
 # Пример использования
 async def main():
-    # Загрузка JavaScript кода из файла
-    with open('./js_sdk_query.js', 'r') as js_file:
-        js_code = js_file.read()
-
-    sdk = DecimalSDK(js_code)
+    sdk = DecimalSDK()
     response = await sdk.send_del('0xRecipientAddress', 10, 'ваша мнемоническая фраза')
     print(response)
 
