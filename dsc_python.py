@@ -1,19 +1,52 @@
-import json
-from py_mini_racer import py_mini_racer
 import asyncio
+import json
+import subprocess
+import os
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 
 class DecimalSDK:
     def __init__(self):
         """
         Инициализация SDK с JavaScript кодом.
-
-        :param js_code: Строка с JavaScript кодом.
         """
-        # Загрузка JavaScript кода из файла
-        self.ctx = py_mini_racer.MiniRacer()
-        with open('./dsc-js-sdk/js_sdk_query.js', 'r') as js_file:
-            js_code = js_file.read()
-        self.ctx.eval(js_code)
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        self.js_file = os.path.join(current_dir, 'main.js')  # Путь к вашему JavaScript файлу
+
+    async def call_js_function(self, action: str, *args) -> dict:
+        process = await asyncio.create_subprocess_exec(
+            'node', self.js_file, action, *(str(arg) for arg in args),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
+
+        stdout, stderr = await process.communicate()
+
+        if process.returncode != 0:
+            print(f"!Error: {stderr.decode()}")
+            return {"success": False, "data": stderr.decode()}
+
+        if not stdout.decode():
+            print("No output from JS function")
+            return {"success": False, "data": "No output from JS function"}
+
+        try:
+            # return {"success": True, "data": stdout.decode()}
+            return json.loads(stdout.decode())
+        except json.JSONDecodeError as e:
+            print(f"JSON Decode Error: {e} - Output: {stdout.decode()}")
+            return {"success": False, "data": "Invalid JSON response"}
+
+    async def token_by_symbol(self, symbol: str) -> dict:
+        """
+        Получение адреса токена по символу.
+
+        :param symbol: Символ токена.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('TokenBySymbol', symbol.lower())
 
     async def send_del(self, to: str, amount: float, mnemonic: str) -> dict:
         """
@@ -24,9 +57,7 @@ class DecimalSDK:
         :param mnemonic: Мнемоническая фраза.
         :return: Результат выполнения функции.
         """
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(None, self.ctx.call, "sendDEL", to, amount, mnemonic)
-        return json.loads(result)
+        return await self.call_js_function('sendDEL', to, str(amount), mnemonic)
 
     async def burn_del(self, amount: float, mnemonic: str) -> dict:
         """
@@ -36,20 +67,7 @@ class DecimalSDK:
         :param mnemonic: Мнемоническая фраза.
         :return: Результат выполнения функции.
         """
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(None, self.ctx.call, "burndDEL", amount, mnemonic)
-        return json.loads(result)
-
-    async def token_by_symbol(self, symbol: str) -> dict:
-        """
-        Получение адреса токена по символу.
-
-        :param symbol: Символ токена.
-        :return: Результат выполнения функции.
-        """
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(None, self.ctx.call, "TokenBySymbol", symbol)
-        return json.loads(result)
+        return await self.call_js_function('burnDEL', str(amount), mnemonic)
 
     async def transfer_token(self, token_address: str, to: str, amount: float, mnemonic: str) -> dict:
         """
@@ -61,13 +79,103 @@ class DecimalSDK:
         :param mnemonic: Мнемоническая фраза.
         :return: Результат выполнения функции.
         """
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(None, self.ctx.call, "TransferToken", token_address, to, amount, mnemonic)
-        return json.loads(result)
+        return await self.call_js_function('TransferToken', token_address, to, str(amount), mnemonic)
+
+    async def transfer_from_token(self, token_address: str, from_address: str, to: str, amount: float, mnemonic: str) -> dict:
+        """
+        Перевод токенов от одного адреса к другому.
+
+        :param token_address: Адрес токена.
+        :param from_address: Адрес отправителя.
+        :param to: Адрес получателя.
+        :param amount: Сумма для перевода.
+        :param mnemonic: Мнемоническая фраза.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('TransferFromToken', token_address, from_address, to, str(amount), mnemonic)
+
+    async def burn_token(self, token_address: str, amount: float, mnemonic: str) -> dict:
+        """
+        Сжигание токенов.
+
+        :param token_address: Адрес токена.
+        :param amount: Сумма для сжигания.
+        :param mnemonic: Мнемоническая фраза.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('BurnToken', token_address, str(amount), mnemonic)
+
+    async def approve_token(self, token_address: str, spender: str, amount: float, mnemonic: str) -> dict:
+        """
+        Одобрение токенов.
+
+        :param token_address: Адрес токена.
+        :param spender: Адрес, которому разрешено тратить токены.
+        :param amount: Сумма для одобрения.
+        :param mnemonic: Мнемоническая фраза.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('ApproveToken', token_address, spender, str(amount), mnemonic)
+
+    async def buy_del_for_token(self, token_address: str, amount: float, mnemonic: str) -> dict:
+        """
+        Покупка токенов за DEL.
+
+        :param token_address: Адрес токена.
+        :param amount: Сумма для покупки.
+        :param mnemonic: Мнемоническая фраза.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('BuyDelForToken', token_address, str(amount), mnemonic)
+
+    async def buy_del_for_token_symbol(self, symbol: str, amount: float, mnemonic: str) -> dict:
+        """
+        Покупка токенов за DEL по символу.
+
+        :param symbol: Символ токена.
+        :param amount: Сумма для покупки.
+        :param mnemonic: Мнемоническая фраза.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('BuyDelForTokenSymbol', symbol.lower(), str(amount), mnemonic)
+
+    async def sell_del_for_token(self, token_address: str, amount: float, mnemonic: str) -> dict:
+        """
+        Продажа токенов за DEL.
+
+        :param token_address: Адрес токена.
+        :param amount: Сумма для продажи.
+        :param mnemonic: Мнемоническая фраза.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('SellDelForToken', token_address, str(amount), mnemonic)
+
+    async def sell_del_for_token_symbol(self, symbol: str, amount: float, mnemonic: str) -> dict:
+        """
+        Продажа токенов за DEL по символу.
+
+        :param symbol: Символ токена.
+        :param amount: Сумма для продажи.
+        :param mnemonic: Мнемоническая фраза.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('SellDelForTokenSymbol', symbol.lower(), str(amount), mnemonic)
+
+    async def convert_token_to_token(self, token_address1: str, token_address2: str, amount: float, mnemonic: str) -> dict:
+        """
+        Конвертация токенов.
+
+        :param token_address1: Адрес первого токена.
+        :param token_address2: Адрес второго токена.
+        :param amount: Сумма для конвертации.
+        :param mnemonic: Мнемоническая фраза.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('ConvertTokenToToken', token_address1, token_address2, str(amount), mnemonic)
 
     async def delegation_del(self, validator: str, days: int, amount: float, mnemonic: str) -> dict:
         """
-        Делегирование DEL токенов.
+        Делегирование DEL.
 
         :param validator: Адрес валидатора.
         :param days: Количество дней.
@@ -75,15 +183,41 @@ class DecimalSDK:
         :param mnemonic: Мнемоническая фраза.
         :return: Результат выполнения функции.
         """
-        loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(None, self.ctx.call, "DelegationDEL", validator, days, amount, mnemonic)
-        return json.loads(result)
+        return await self.call_js_function('DelegationDEL', validator, str(days), str(amount), mnemonic)
 
-# Пример использования
+    async def delegation_token_approve(self, validator: str, token_address: str, days: int, amount: float, mnemonic: str) -> dict:
+        """
+        Одобрение токена для делегирования.
+
+        :param validator: Адрес валидатора.
+        :param token_address: Адрес токена.
+        :param days: Количество дней.
+        :param amount: Сумма для одобрения.
+        :param mnemonic: Мнемоническая фраза.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('DelegationTokenApprove', validator, token_address, str(days), str(amount), mnemonic)
+
+    async def delegation_token_permit(self, validator: str, token_address: str, days: int, amount: float, mnemonic: str) -> dict:
+        """
+        Разрешение токена для делегирования.
+
+        :param validator: Адрес валидатора.
+        :param token_address: Адрес токена.
+        :param days: Количество дней.
+        :param amount: Сумма для разрешения.
+        :param mnemonic: Мнемоническая фраза.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('DelegationTokenPermit', validator, token_address, str(days), str(amount), mnemonic)
+
 async def main():
     sdk = DecimalSDK()
-    response = await sdk.send_del('0xRecipientAddress', 10, 'ваша мнемоническая фраза')
-    print(response)
+    response = await sdk.token_by_symbol('mintcandy')
+    print('response', response)
+
+    # response = await sdk.send_del('0xRecipientAddress', 10, 'your mnemonic here')
+    # print('response', response)
 
 if __name__ == "__main__":
     asyncio.run(main())
