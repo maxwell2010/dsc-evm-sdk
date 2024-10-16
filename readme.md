@@ -43,15 +43,17 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
+Делегируем 66666666 mintcandy в валидатор MintCandy
 ```python
 sdk.delegation_token_symbol('0x7a3585a25792e01f0e623881c96f8c1b36a75fbf', 'mintcandy', 66666666, 0, 'тут ваша сид фраза') 
-``` Делегируем 66666666 mintcandy в валидатор MintCandy
+``` 
 
+Покупаем mintcandy на 1000 DEL, где '0x4E8118E97586A60e5d71e45811E512546bCD52Ce' - адресс смарт-контракта mintcandy
 ```python
 sdk.buy_del_for_token('0x4E8118E97586A60e5d71e45811E512546bCD52Ce', 1000, 'тут ваша сид фраза') 
-``` Покупаем mintcandy на 1000 DEL, где '0x4E8118E97586A60e5d71e45811E512546bCD52Ce' - адресс смарт-контракта mintcandy
+``` 
 
+Покупаем mintcandy на 1000 DEL, выполняется транзакция дольше так, как вычисляется адресс смарт-контракта mintcandy
 ```python
 sdk.buy_del_for_token_symbol('mintcandy', 1000, 'тут ваша сид фраза')
-```Покупаем mintcandy на 1000 DEL, выполняется транзакция дольше так, как вычисляется адресс смарт-контракта mintcandy
 ```
