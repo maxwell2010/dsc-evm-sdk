@@ -20,15 +20,11 @@ def clone_repositories():
 def install_javascript_dependencies():
     subprocess.check_call(['npm', 'install'])
 
-def install_python_dependencies():
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'py_mini_racer'])
-
 def main():
     clone_repositories()
     install_node()
     install_javascript_dependencies()
     os.chdir('..')  # Возврат в предыдущую папку
-    install_python_dependencies()
     print("Установка завершена!")
 
 if __name__ == '__main__':
