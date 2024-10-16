@@ -2,7 +2,6 @@ import asyncio
 import json
 import subprocess
 import os
-from web3 import Web3
 
 
 class Helpers:
