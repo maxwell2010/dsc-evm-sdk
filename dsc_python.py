@@ -12,7 +12,7 @@ class Helpers:
 
     async def bigInt(self, value: str):
         try:
-            return int(value, 18)
+            return int(value, 16)
         except:
             return 0
 
