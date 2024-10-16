@@ -3,14 +3,13 @@
 
 ## Ручная установка:
 
-1. переходим в папку со своим проектом
-2. клонируем ```git clone https://github.com/maxwell2010/dsc-evm-sdk.git```
-3. переходим в папку ```cd dsc-evm-sdk```
-4. клонируем ```git clone --branch master https://bitbucket.org/decimalteam/dsc-js-sdk.git```
-5. переходим в папку ```cd dsc-js-sdk```
-6. инициализировать пакеты ```npm install```
-7. вернуться в предыдущую папку ```cd ..```
-8. установить библиотеку web3, ```pip3 install web3```
+1. клонируем ```git clone https://github.com/maxwell2010/dsc-evm-sdk.git```
+2. переходим в папку ```cd dsc-evm-sdk```
+3. клонируем ```git clone --branch master https://bitbucket.org/decimalteam/dsc-js-sdk.git```
+4. переходим в папку ```cd dsc-js-sdk```
+5. инициализируем пакеты ```npm install```
+6. возвращаемся в предыдущую папку ```cd ..```
+7. устанавливаем библиотеку web3, ```pip3 install web3```
 
 
 
