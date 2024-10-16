@@ -36,7 +36,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-Перевод 1000 DEL другому участнику
+Перевод 1000000 DEL другому участнику
 ```python
 await sdk.send_del('0x40900a48273644768c09183e00e43528c17a29f6', 1000000, mnemonic) 
 ``` 
