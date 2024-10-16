@@ -3,10 +3,10 @@
 
 ## Ручная установка:
 
-1. ```git clone https://github.com/maxwell2010/dsc-evm-sdk.git```
-2. перейти в папку ```cd dsc-evm-sdk```
-3. ```git clone --branch master https://bitbucket.org/decimalteam/dsc-js-sdk.git```
-4. проверить в какой мы системе, если linux то выполняем команду ```sudo apt install nodejs npm```, если на windows то соответственно установить nodejs для windows. На момент тестирования у меня была 20 версия.
+1. переходим в папку со своим проектом
+2. клонируем ```git clone https://github.com/maxwell2010/dsc-evm-sdk.git```
+3. перейти в папку ```cd dsc-evm-sdk```
+4. клонируем ```git clone --branch master https://bitbucket.org/decimalteam/dsc-js-sdk.git```
 5. перейти в папку ```cd dsc-js-sdk```
 6. инициализировать пакеты ```npm install```
 7. вернуться в предыдущую папку ```cd ..```
