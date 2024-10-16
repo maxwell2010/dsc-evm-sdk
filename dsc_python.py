@@ -300,13 +300,13 @@ class DecimalSDK:
                                            mnemonic)
 
 
-async def main():
-    sdk = DecimalSDK()
-    response = await sdk.token_by_symbol('mintcandy')
-    print('response', response)
+# async def main():
+#     sdk = DecimalSDK()
+#     response = await sdk.token_by_symbol('mintcandy')
+#     print('response', response)
 
-    # response = await sdk.send_del('0xRecipientAddress', 10, 'your mnemonic here')
-    # print('response', response)
+#     # response = await sdk.send_del('0xRecipientAddress', 10, 'your mnemonic here')
+#     # print('response', response)
 
-if __name__ == "__main__":
-    asyncio.run(main())
+# if __name__ == "__main__":
+#     asyncio.run(main())
