@@ -19,7 +19,15 @@
 8. установить pip3 install py_mini_racer
 
 
-## Использование:
+# Использование:
+## Импортирование:
+
+```python
+import asyncio
+from dsc_python import DecimalSDK
+```
+
+## Вызов нужной функции:
 
 ```python
 import asyncio
@@ -34,4 +42,3 @@ async def main():
 if __name__ == "__main__":
     asyncio.run(main())
 ```
-
