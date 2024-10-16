@@ -2,6 +2,7 @@ import asyncio
 import json
 import subprocess
 import os
+# from web3 import Web3
 
 
 class Helpers:
@@ -87,6 +88,26 @@ class DecimalSDK:
         :return: Результат выполнения функции.
         """
         return await self.call_js_function('balanceDEL', str(address))
+
+    async def balance_token(self, token_address: str, address: str) -> dict:
+        """ +
+        Баланс токена в 10^18.
+
+        :param token_address: Адрес токена.
+        :param address: EVM кошелек.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('balanceToken', str(token_address), str(address))
+
+    async def balance_token_symbol(self, symbol: str, address: str) -> dict:
+        """ +
+        Баланс токена в 10^18.
+
+        :param symbol: Тикер токена.
+        :param address: EVM кошелек.
+        :return: Результат выполнения функции.
+        """
+        return await self.call_js_function('balanceTokenSymbol', str(symbol), str(address))
 
     async def transfer_token(self, token_address: str, to: str, amount: float, mnemonic: str) -> dict:
         """ +
