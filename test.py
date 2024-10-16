@@ -1,8 +1,9 @@
 import time
 import asyncio
-from dsc_python import DecimalSDK
+from dsc_python import DecimalSDK, Helpers
 
 sdk = DecimalSDK()
+helpers = Helpers()
 
 
 async def main():
