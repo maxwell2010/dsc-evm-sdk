@@ -22,13 +22,13 @@
 ## Использование:
 
 ```python
-async def main():
-    # Загрузка JavaScript кода из файла
-    with open('./js_sdk_query.js', 'r') as js_file:
-        js_code = js_file.read()
+import asyncio
+from dsc_python import DecimalSDK
 
-    sdk = DecimalSDK(js_code)
-    response = await sdk.send_del('0xRecipientAddress', 10, 'ваша мнемоническая фраза')
+sdk = DecimalSDK()
+
+async def main():
+    response = await sdk.token_by_symbol('mintcandy') # Получение смарт-контракта токена MINTCANDY
     print(response)
 
 if __name__ == "__main__":
