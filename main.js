@@ -3,6 +3,8 @@ const {
     sendDEL,
     burnDEL,
     balanceDEL,
+    balanceToken,
+    balanceTokenSymbol,
     delegationDEL,
     TransferToken,
     TransferFromToken,
@@ -61,6 +63,18 @@ async function main() {
             address = args[0];
             decimalEVM = await initialDecimalEVM(null);
             balance = await balanceDEL(decimalEVM, address);
+            console.log(JSON.stringify(balance));
+            break;
+        case 'balanceToken':
+            [tokenAddress, address] = args;
+            decimalEVM = await initialDecimalEVM(null);
+            balance = await balanceToken(decimalEVM, tokenAddress, address);
+            console.log(JSON.stringify(balance));
+            break;
+        case 'balanceTokenSymbol':
+            [symbol, address] = args;
+            decimalEVM = await initialDecimalEVM(null);
+            balance = await balanceTokenSymbol(decimalEVM, symbol, address);
             console.log(JSON.stringify(balance));
             break;
         case 'delegationDEL':
