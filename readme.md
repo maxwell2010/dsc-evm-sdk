@@ -17,18 +17,14 @@
 ```python
 import asyncio
 from dsc_python import DecimalSDK
+
+sdk = DecimalSDK()
+mnemonic = 'ваша сид фраза'
 ```
 
 ## Вызов нужной функции:
 
 ```python
-import asyncio
-from dsc_python import DecimalSDK
-
-sdk = DecimalSDK()
-mnemonic = 'ваша сид фраза'
-
-
 async def main():
     response = await sdk.token_by_symbol('mintcandy') # Получение адреса смарт-контракта токена MINTCANDY
     print(response)
