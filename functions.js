@@ -43,6 +43,29 @@ async function balanceDEL(decimalEVM, address) {
     }
 }
 
+async function balanceToken(decimalEVM, tokenAddress, address) {
+    try {
+        tx = await decimalEVM.balanceOfToken(tokenAddress, address);
+        return { success: true, data: tx.toString() };
+    } catch (error) {
+        return { success: false, error: error.message || error };
+    }
+}
+
+async function balanceTokenSymbol(decimalEVM, symbol, address) {
+    tokenResult = await TokenBySymbol(decimalEVM, symbol);
+        if (!tokenResult.success) {
+            return { success: false, error: tokenResult.error };
+        }
+    tokenAddress = tokenResult.data;
+    try {
+        tx = await decimalEVM.balanceOfToken(tokenAddress, address);
+        return { success: true, data: tx.toString() };
+    } catch (error) {
+        return { success: false, error: error.message || error };
+    }
+}
+
 async function delegationDEL(decimalEVM, validator, days, amount) {
     amount = decimalEVM.parseEther(amount);
     if (days <= 0) {
@@ -335,6 +358,8 @@ module.exports = {
     sendDEL,
     burnDEL,
     balanceDEL,
+    balanceToken,
+    balanceTokenSymbol,
     delegationDEL,
     TransferToken,
     TransferFromToken,
