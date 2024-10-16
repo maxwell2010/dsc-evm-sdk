@@ -68,8 +68,14 @@ await sdk.burn_token_symbol('mintcandy', 1000, mnemonic)
 await sdk.balance_del('0x40900a48273644768c09183e00e43528c17a29f6') 
 ``` 
 
-Делегируем 66666666 mintcandy в валидатор MintCandy
+Делегируем 1000 DEL в валидатор MintCandy, где 0 - количество дней делегирования, если 0 то стандартная транзакция делегирования, если > 0 то холд на количество дней
 ```python
+await sdk.delegation_del('0x7a3585a25792e01f0e623881c96f8c1b36a75fbf', 1000, 0, mnemonic) 
+``` 
+
+Делегируем 66666666 mintcandy в валидатор MintCandy, где 0 - количество дней делегирования, если 0 то стандартная транзакция делегирования, если > 0 то холд на количество дней
+```python
+await sdk.delegation_token_permit('0x7a3585a25792e01f0e623881c96f8c1b36a75fbf', '0x4E8118E97586A60e5d71e45811E512546bCD52Ce', 'mintcandy', 66666666, 0, mnemonic) 
 await sdk.delegation_token_symbol('0x7a3585a25792e01f0e623881c96f8c1b36a75fbf', 'mintcandy', 66666666, 0, mnemonic) 
 ``` 
 
