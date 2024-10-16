@@ -41,7 +41,7 @@ if __name__ == "__main__":
 await sdk.send_del('0x40900a48273644768c09183e00e43528c17a29f6', 1000000, mnemonic) 
 ``` 
 
-Перевод 1000000 MINTCANDY другому участнику, где '0x4E8118E97586A60e5d71e45811E512546bCD52Ce' - адрес смарт-контракта mintcandy
+Перевод 1000000 MINTCANDY другому участнику, где 0x4E8118E97586A60e5d71e45811E512546bCD52Ce - адрес смарт-контракта mintcandy
 ```python
 await sdk.transfer_token('0x4E8118E97586A60e5d71e45811E512546bCD52Ce', '0x40900a48273644768c09183e00e43528c17a29f6', 1000000, mnemonic) 
 await sdk.transfer_token_symbol('mintcandy', '0x40900a48273644768c09183e00e43528c17a29f6', 1000000, mnemonic) 
@@ -57,6 +57,12 @@ await sdk.burn_token_symbol('mintcandy', 1000, mnemonic)
 Баланс DEL
 ```python
 await sdk.balance_del('0x40900a48273644768c09183e00e43528c17a29f6') 
+``` 
+
+Баланс токена, где 0x4E8118E97586A60e5d71e45811E512546bCD52Ce - адрес смарт-контракта mintcandy
+```python
+await sdk.balance_token('0x4E8118E97586A60e5d71e45811E512546bCD52Ce', '0x40900a48273644768c09183e00e43528c17a29f6') 
+await sdk.balance_token_symbol('mintcandy', '0x40900a48273644768c09183e00e43528c17a29f6') 
 ``` 
 
 Делегирование 1000 DEL в валидатор MintCandy, где 0 - количество дней делегирования, если 0 то стандартная транзакция делегирования, если > 0 то холд на количество дней
