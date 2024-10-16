@@ -92,7 +92,7 @@ await sdk.buy_del_for_token_symbol('mintcandy', 1000, mnemonic)
 
 Продажа 1000000 mintcandy
 ```python
-await sdk.sell_del_for_token('mintcandy', 1000000, mnemonic)
+await sdk.sell_del_for_token('0x4E8118E97586A60e5d71e45811E512546bCD52Ce', 1000000, mnemonic)
 ```
 ```python
 await sdk.sell_del_for_token_symbol('mintcandy', 1000000, mnemonic)
